@@ -4,22 +4,24 @@ DATASOURCE_USERNAME=$2
 DATASOURCE_PASSWORD=$3
 JWT_SECRET=$4
 PORT=$5
-NAME=$6
-VERSION=$7
+GITLAB_USER=$6
+PROJECT_NAME=$7
+PROJECT_VERSION=$8
 
-if [ $# != 7 ]; then
+if [ $# != 8 ]; then
   echo "파라미터를 확인해주세요."
   echo "DATASOURCE_URL:$1"
   echo "DATASOURCE_USERNAME:$2"
   echo "DATASOURCE_PASSWORD:$3"
   echo "JWT_SECRET:$4"
   echo "ACCESS_PORT:$5"
-  echo "IMAGE_NAME:$6"
-  echo "IMAGE_VERSION:$7"
+  echo "GITLAB_USER:$6"
+  echo "PROJECT_NAME:$7"
+  echo "PROJECT_VERSION:$8"
   exit
 fi
 
-CONTAINER=$(docker ps -aq --filter "name=$NAME")
+CONTAINER=$(docker ps -aq --filter "name=$PROJECT_NAME")
 
 if [ -n "$CONTAINER" ]; then
   echo "컨테이너 종료"
@@ -31,7 +33,7 @@ if [ -n "$CONTAINER" ]; then
   docker rm $CONTAINER
 fi
 
-IMAGE=$(docker images --filter=reference="$NAME" -q)
+IMAGE=$(docker images --filter=reference="$PROJECT_NAME" -q)
 
 if [ -n "$IMAGE" ]; then
   echo "이미지 삭제"
@@ -51,11 +53,8 @@ if [ -n "$USING_PORT_ID" ]; then
   docker rm $USING_PORT_ID
 fi
 
-echo "git pull start." &&
-  git pull &&
-  echo "git pull done." &&
-  echo "docker image build" &&
-  docker build -t $NAME:$VERSION . &&
-  echo "docker image build done." &&
+echo "docker pull start." &&
+  docker pull registry.gitlab.com/$GITLAB_USER/$PROJECT_NAME&&
+  echo "docker pull done." &&
   echo "docker container run" &&
-  docker run --name $NAME -p $PORT:8080 -e SPRING_DATASOURCE_URL=$DATASOURCE_URL -e SPRING_DATASOURCE_PASSWORD=$DATASOURCE_PASSWORD -e SPRING_DATASOURCE_USERNAME=$DATASOURCE_USERNAME -e JWT_SECRET=$JWT_SECRET $NAME:$VERSION
+  docker run --name $PROJECT_NAME -p $PORT:8080 -e SPRING_DATASOURCE_URL=$DATASOURCE_URL -e SPRING_DATASOURCE_PASSWORD=$DATASOURCE_PASSWORD -e SPRING_DATASOURCE_USERNAME=$DATASOURCE_USERNAME -e JWT_SECRET=$JWT_SECRET $PROJECT_NAME:$PROJECT_VERSION
