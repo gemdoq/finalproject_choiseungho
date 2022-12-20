@@ -33,7 +33,7 @@ if [ -n "$CONTAINER" ]; then
   docker rm $CONTAINER
 fi
 
-IMAGE=$(docker images --filter=reference="$PROJECT_NAME" -q)
+IMAGE=$(docker images --filter=reference="registry.gitlab.com/$GITLAB_USER/$PROJECT_NAME" -q)
 
 if [ -n "$IMAGE" ]; then
   echo "이미지 삭제"
@@ -57,4 +57,4 @@ echo "docker pull start." &&
   docker pull registry.gitlab.com/$GITLAB_USER/$PROJECT_NAME&&
   echo "docker pull done." &&
   echo "docker container run" &&
-  docker run --name $PROJECT_NAME -p $PORT:8080 -e SPRING_DATASOURCE_URL=$DATASOURCE_URL -e SPRING_DATASOURCE_PASSWORD=$DATASOURCE_PASSWORD -e SPRING_DATASOURCE_USERNAME=$DATASOURCE_USERNAME -e JWT_SECRET=$JWT_SECRET registry.gitlab.com/$GITLAB_USER/$PROJECT_NAME
+  docker run --name $PROJECT_NAME -p $PORT:8080 -e SPRING_DATASOURCE_URL=$DATASOURCE_URL -e SPRING_DATASOURCE_PASSWORD=$DATASOURCE_PASSWORD -e SPRING_DATASOURCE_USERNAME=$DATASOURCE_USERNAME -e JWT_SECRET=$JWT_SECRET registry.gitlab.com/$GITLAB_USER/$PROJECT_NAME:latest
