@@ -6,9 +6,8 @@ JWT_SECRET=$4
 PORT=$5
 GITLAB_USER=$6
 PROJECT_NAME=$7
-PROJECT_VERSION=$8
 
-if [ $# != 8 ]; then
+if [ $# != 7 ]; then
   echo "파라미터를 확인해주세요."
   echo "DATASOURCE_URL:$1"
   echo "DATASOURCE_USERNAME:$2"
@@ -17,7 +16,6 @@ if [ $# != 8 ]; then
   echo "ACCESS_PORT:$5"
   echo "GITLAB_USER:$6"
   echo "PROJECT_NAME:$7"
-  echo "PROJECT_VERSION:$8"
   exit
 fi
 
