@@ -1,8 +1,8 @@
 stages:
   - build
-  - dockerbuildpush
+  - dockerbuild-push
 
-build-job:
+build:
   image: openjdk:11.0-slim
   stage: build
   script:
@@ -13,11 +13,11 @@ build-job:
   artifacts:
     paths:
       - build/libs/*.jar
-      - expire_in: 8 min
+    expire_in: 8 min
 
 package:
   image: docker:latest
-  stage: dockerbuildpush
+  stage: dockerbuild-push
   services:
     - docker:dind
   before_script:
