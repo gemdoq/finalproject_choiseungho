@@ -30,7 +30,7 @@
 　
 ## ▶ Deployment
 ```shell
-sudo sh deploy.sh {db.url} {db.username} {db.password} {jwt.secret} {port} {gitlab.username} {project.name} {project.version}
+sudo sh deploy.sh {db.url} {db.username} {db.password} {jwt.secret} {port} {gitlab.username} {project.name}
 ```
 　
 - - -
