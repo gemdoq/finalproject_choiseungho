@@ -14,6 +14,11 @@ public class UserService {
     private final UserRepository userRepository;
 
     public UserDto join(UserJoinRequest userJoinRequest) {
+        userRepository.findByUserName(userJoinRequest.getUserName())
+                .ifPresent(user-> {
+                    throw new RuntimeException();
+                });
+
         User savedUser = userRepository.save(userJoinRequest.toUser());
         return savedUser.toUserDto();
     }
