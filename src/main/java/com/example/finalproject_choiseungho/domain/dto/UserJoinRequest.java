@@ -12,10 +12,10 @@ public class UserJoinRequest {
     private String userName;
     private String password;
 
-    public User toUser() {
+    public User toUser(String password) {
         return User.builder()
                 .userName(this.userName)
-                .password(this.password)
+                .password(password)
                 .build();
     }
 }

@@ -7,6 +7,7 @@ import com.example.finalproject_choiseungho.exception.ErrorCode;
 import com.example.finalproject_choiseungho.exception.UserException;
 import com.example.finalproject_choiseungho.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public UserDto join(UserJoinRequest userJoinRequest) {
         userRepository.findByUserName(userJoinRequest.getUserName())
@@ -21,7 +23,7 @@ public class UserService {
                     throw new UserException(ErrorCode.DUPLICATED_USER_NAME, String.format("UserName:%s", userJoinRequest.getUserName()));
                 });
 
-        User savedUser = userRepository.save(userJoinRequest.toUser());
+        User savedUser = userRepository.save(userJoinRequest.toUser(bCryptPasswordEncoder.encode(userJoinRequest.getPassword())));
         return savedUser.toUserDto();
     }
 }
