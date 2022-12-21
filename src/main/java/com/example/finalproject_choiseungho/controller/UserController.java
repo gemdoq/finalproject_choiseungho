@@ -1,5 +1,6 @@
 package com.example.finalproject_choiseungho.controller;
 
+import com.example.finalproject_choiseungho.domain.dto.Response;
 import com.example.finalproject_choiseungho.domain.dto.UserDto;
 import com.example.finalproject_choiseungho.domain.dto.UserJoinRequest;
 import com.example.finalproject_choiseungho.domain.dto.UserJoinResponse;
@@ -19,8 +20,8 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/join")
-    public ResponseEntity<UserJoinResponse> join(@RequestBody UserJoinRequest userJoinRequest) {
-        UserDto userDto = userService.join(userJoinRequest);
-        return ResponseEntity.ok(userDto.toUserJoinResponse());
+    public Response<UserJoinResponse> join(@RequestBody UserJoinRequest userJoinRequest) {
+        UserDto savedUserDto = userService.join(userJoinRequest);
+        return Response.success(new UserJoinResponse(savedUserDto.getId(), savedUserDto.getUserName()));
     }
 }

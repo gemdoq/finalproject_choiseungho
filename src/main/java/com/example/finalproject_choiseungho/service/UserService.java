@@ -3,6 +3,8 @@ package com.example.finalproject_choiseungho.service;
 import com.example.finalproject_choiseungho.domain.dto.UserDto;
 import com.example.finalproject_choiseungho.domain.dto.UserJoinRequest;
 import com.example.finalproject_choiseungho.domain.entity.User;
+import com.example.finalproject_choiseungho.exception.ErrorCode;
+import com.example.finalproject_choiseungho.exception.UserException;
 import com.example.finalproject_choiseungho.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,7 +18,7 @@ public class UserService {
     public UserDto join(UserJoinRequest userJoinRequest) {
         userRepository.findByUserName(userJoinRequest.getUserName())
                 .ifPresent(user-> {
-                    throw new RuntimeException();
+                    throw new UserException(ErrorCode.DUPLICATED_USER_NAME, String.format("UserName:%s", userJoinRequest.getUserName()));
                 });
 
         User savedUser = userRepository.save(userJoinRequest.toUser());
