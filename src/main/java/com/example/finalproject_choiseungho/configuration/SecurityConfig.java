@@ -27,8 +27,15 @@ public class SecurityConfig {
         return httpSecurity
                 .httpBasic().disable()
                 .csrf().disable()
-                .cors().disable()
-                .sessionManagement().disable()
+                .cors().and()
+                .authorizeRequests()
+                .antMatchers("/api/**").permitAll()
+                .antMatchers("/api/v1/users/join", "/api/v1/users/login").permitAll() // join, login은 언제나 가능
+                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // jwt사용하는 경우 씀
+                .and()
+//                .addFilterBefore(new JwtFilter(userService, secretKey), UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 }
