@@ -4,6 +4,7 @@ import com.example.finalproject_choiseungho.domain.dto.UserDto;
 import com.example.finalproject_choiseungho.domain.dto.UserJoinRequest;
 import com.example.finalproject_choiseungho.domain.dto.UserLoginRequest;
 import com.example.finalproject_choiseungho.domain.entity.User;
+import com.example.finalproject_choiseungho.domain.entity.UserRole;
 import com.example.finalproject_choiseungho.exception.ErrorCode;
 import com.example.finalproject_choiseungho.exception.UserException;
 import com.example.finalproject_choiseungho.repository.UserRepository;
@@ -12,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import javax.management.relation.Relation;
 
 @Service
 @RequiredArgsConstructor
@@ -30,7 +33,7 @@ public class UserService {
                     throw new UserException(ErrorCode.DUPLICATED_USER_NAME, String.format("UserName : %s", userJoinRequest.getUserName()));
                 });
 
-        User savedUser = userRepository.save(userJoinRequest.toUser(bCryptPasswordEncoder.encode(userJoinRequest.getPassword())));
+        User savedUser = userRepository.save(userJoinRequest.toUser(bCryptPasswordEncoder.encode(userJoinRequest.getPassword()), UserRole.USER));
         return savedUser.toUserDto();
     }
 
@@ -44,5 +47,10 @@ public class UserService {
 
         String jwt = JwtUtil.generateToken(userLoginRequest.getUserName(), secretKey, expiredTimeMs);
         return jwt;
+    }
+
+    public User getUserByUserName(String userName) {
+        User user = userRepository.findByUserName(userName).get();
+        return user;
     }
 }

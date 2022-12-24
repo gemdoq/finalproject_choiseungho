@@ -6,10 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,10 +17,13 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(unique = true)
     private String userName;
     private String password;
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
 
     public UserDto toUserDto() {
-        return new UserDto(this.id, this.userName, this.password);
+        return new UserDto(this.id, this.userName, this.password, this.role);
     }
 }

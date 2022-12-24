@@ -6,10 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @AllArgsConstructor
@@ -22,8 +19,11 @@ public class Post {
     private Long id;
     private String title;
     private String body;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public PostDto toPostDto() {
-        return new PostDto(this.id, this.title, this.body);
+        return new PostDto(this.id, this.title, this.body, this.user.getUserName());
     }
 }
