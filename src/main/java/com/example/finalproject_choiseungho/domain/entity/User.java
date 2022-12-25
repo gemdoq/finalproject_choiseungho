@@ -13,13 +13,16 @@ import javax.persistence.*;
 @Getter
 @Entity
 @Builder
-public class User {
+public class User extends UserBase {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(unique = true)
     private String userName;
     private String password;
+
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
