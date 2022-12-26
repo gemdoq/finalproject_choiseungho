@@ -2,6 +2,7 @@ package com.example.finalproject_choiseungho.service;
 
 import com.example.finalproject_choiseungho.domain.dto.PostCreateRequest;
 import com.example.finalproject_choiseungho.domain.dto.PostDto;
+import com.example.finalproject_choiseungho.domain.dto.PostReadResponse;
 import com.example.finalproject_choiseungho.domain.entity.Post;
 import com.example.finalproject_choiseungho.domain.entity.User;
 import com.example.finalproject_choiseungho.exception.ErrorCode;
@@ -10,6 +11,8 @@ import com.example.finalproject_choiseungho.repository.PostRepository;
 import com.example.finalproject_choiseungho.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
@@ -29,5 +32,9 @@ public class PostService {
 
         Post savedPost = postRepository.save(postCreateRequest.toPost(user));
         return savedPost.toPostDto();
+    }
+
+    public Page<PostReadResponse> readAllPostList(Pageable pageable) {
+        return postRepository.findAll(pageable).map(PostReadResponse::toPostReadResponse);
     }
 }

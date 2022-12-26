@@ -1,17 +1,18 @@
 package com.example.finalproject_choiseungho.controller;
 
-import com.example.finalproject_choiseungho.domain.dto.PostCreateRequest;
-import com.example.finalproject_choiseungho.domain.dto.PostCreateResponse;
-import com.example.finalproject_choiseungho.domain.dto.PostDto;
-import com.example.finalproject_choiseungho.domain.dto.Response;
+import com.example.finalproject_choiseungho.domain.dto.*;
 import com.example.finalproject_choiseungho.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.SortDefault;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/posts")
@@ -29,5 +30,11 @@ public class PostController {
 
         PostDto savedPostDto = postService.createPost(postCreateRequest, authentication);
         return Response.success(new PostCreateResponse("포스트 등록 완료", savedPostDto.getId()));
+    }
+
+    @GetMapping
+    public Response<Page<PostReadResponse>> readAllPostList(@PageableDefault(size = 20, sort = "createdAt", direction = Sort.Direction.DESC)Pageable pageable) {
+        Page<PostReadResponse> postList = postService.readAllPostList(pageable);
+        return Response.success(postList);
     }
 }
