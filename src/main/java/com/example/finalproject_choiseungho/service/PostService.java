@@ -17,6 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -48,7 +49,8 @@ public class PostService {
         return PostReadResponse.toPostReadResponse(post);
     }
 
-    public PostDto updatePost(Long postId, PostUpdateRequest postUpdateRequest, Authentication authentication) {
+    @Transactional
+    public Long updatePost(Long postId, PostUpdateRequest postUpdateRequest, Authentication authentication) {
         User user = userRepository.findByUserName(authentication.getName())
                 .orElseThrow(() -> new UserException(ErrorCode.USERNAME_NOT_FOUND, ErrorCode.USERNAME_NOT_FOUND.getMessage()));
         log.info("authentication", authentication.toString());
@@ -64,9 +66,7 @@ public class PostService {
         post.update(postUpdateRequest.toPost(user));
         log.info("Updated post id " + post.getId());
 
-        Post updatedPost = postRepository.save(post);
-
-        return updatedPost.toPostDto();
+        return post.getId();
     }
 
     public Long deletePostById(Long postId, Authentication authentication) {

@@ -8,11 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.data.web.SortDefault;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/posts")
@@ -49,8 +46,8 @@ public class PostController {
         log.info("PostUpdateRequest's title : {}, body : {}", postUpdateRequest.getTitle(), postUpdateRequest.getBody());
         log.info("Authentication's ", authentication);
 
-        PostDto updatedPostDto = postService.updatePost(postId, postUpdateRequest, authentication);
-        return Response.success(new PostUpdateResponse("포스트 수정 완료", updatedPostDto.getId()));
+        Long updatedPostId = postService.updatePost(postId, postUpdateRequest, authentication);
+        return Response.success(new PostUpdateResponse("포스트 수정 완료", updatedPostId));
     }
 
     @DeleteMapping("/{postId}")
