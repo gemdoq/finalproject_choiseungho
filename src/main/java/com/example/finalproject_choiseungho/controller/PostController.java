@@ -24,8 +24,7 @@ public class PostController {
 
     @PostMapping
     public Response<PostCreateResponse> createPost(@RequestBody PostCreateRequest postCreateRequest, Authentication authentication) {
-        log.info("PostCreateRequest's title", postCreateRequest.getTitle());
-        log.info("PostCreateRequest's body", postCreateRequest.getBody());
+        log.info("PostCreateRequest's title : {}, body : {}", postCreateRequest.getTitle(), postCreateRequest.getBody());
         log.info("Authentication's ", authentication);
 
         PostDto savedPostDto = postService.createPost(postCreateRequest, authentication);
@@ -36,5 +35,11 @@ public class PostController {
     public Response<Page<PostReadResponse>> readAllPostList(@PageableDefault(size = 20, sort = "createdAt", direction = Sort.Direction.DESC)Pageable pageable) {
         Page<PostReadResponse> postList = postService.readAllPostList(pageable);
         return Response.success(postList);
+    }
+
+    @GetMapping("/{postId}")
+    public Response<PostReadResponse> readOnePost(@PathVariable Long postId) {
+        log.info("Post read id : " + postId);
+        return Response.success(postService.readOnePost(postId));
     }
 }

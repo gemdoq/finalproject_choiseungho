@@ -6,6 +6,7 @@ import com.example.finalproject_choiseungho.domain.dto.PostReadResponse;
 import com.example.finalproject_choiseungho.domain.entity.Post;
 import com.example.finalproject_choiseungho.domain.entity.User;
 import com.example.finalproject_choiseungho.exception.ErrorCode;
+import com.example.finalproject_choiseungho.exception.PostException;
 import com.example.finalproject_choiseungho.exception.UserException;
 import com.example.finalproject_choiseungho.repository.PostRepository;
 import com.example.finalproject_choiseungho.repository.UserRepository;
@@ -36,5 +37,13 @@ public class PostService {
 
     public Page<PostReadResponse> readAllPostList(Pageable pageable) {
         return postRepository.findAll(pageable).map(PostReadResponse::toPostReadResponse);
+    }
+
+    public PostReadResponse readOnePost(Long postId) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new PostException(ErrorCode.POST_NOT_FOUND, ErrorCode.POST_NOT_FOUND.getMessage()));
+        log.info("Got postId from PathVariable" + postId);
+
+        return PostReadResponse.toPostReadResponse(post);
     }
 }
