@@ -3,6 +3,7 @@ package com.example.finalproject_choiseungho.service;
 import com.example.finalproject_choiseungho.domain.dto.PostCreateRequest;
 import com.example.finalproject_choiseungho.domain.dto.PostDto;
 import com.example.finalproject_choiseungho.domain.dto.PostReadResponse;
+import com.example.finalproject_choiseungho.domain.dto.PostUpdateRequest;
 import com.example.finalproject_choiseungho.domain.entity.Post;
 import com.example.finalproject_choiseungho.domain.entity.User;
 import com.example.finalproject_choiseungho.exception.ErrorCode;
@@ -45,5 +46,15 @@ public class PostService {
         log.info("Got postId from PathVariable" + postId);
 
         return PostReadResponse.toPostReadResponse(post);
+    }
+
+    public PostDto updatePost(PostUpdateRequest postUpdateRequest, Authentication authentication) {
+        User user = userRepository.findByUserName(authentication.getName())
+                .orElseThrow(() -> new UserException(ErrorCode.USERNAME_NOT_FOUND, ErrorCode.USERNAME_NOT_FOUND.getMessage()));
+        log.info("authentication", authentication.toString());
+        log.info("authenticated name", authentication.getName());
+
+        Post savedPost = postRepository.save(postUpdateRequest.toPost(user));
+        return savedPost.toPostDto();
     }
 }

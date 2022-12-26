@@ -42,4 +42,13 @@ public class PostController {
         log.info("Post read id : " + postId);
         return Response.success(postService.readOnePost(postId));
     }
+
+    @PutMapping("/{postId}")
+    public Response<PostUpdateResponse> updatePost(@RequestBody PostUpdateRequest postUpdateRequest, Authentication authentication) {
+        log.info("PostUpdateRequest's title : {}, body : {}", postUpdateRequest.getTitle(), postUpdateRequest.getBody());
+        log.info("Authentication's ", authentication);
+
+        PostDto savedPostDto = postService.updatePost(postUpdateRequest, authentication);
+        return Response.success(new PostUpdateResponse("포스트 수정 완료", savedPostDto.getId()));
+    }
 }
