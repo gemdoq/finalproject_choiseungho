@@ -31,6 +31,9 @@ public class PostController {
     @GetMapping
     public Response<Page<PostReadResponse>> readAllPostList(@PageableDefault(size = 20, sort = "createdAt", direction = Sort.Direction.DESC)Pageable pageable) {
         Page<PostReadResponse> postList = postService.readAllPostList(pageable);
+        log.info("pageable : {}", pageable.toString());
+        log.info("Page<PostReadResponse> : {}", postList.toString());
+
         return Response.success(postList);
     }
 
