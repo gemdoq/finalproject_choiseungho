@@ -28,4 +28,9 @@ public class Post extends PostBase {
     public PostDto toPostDto() {
         return new PostDto(this.id, this.title, this.body, this.user.getUserName(), this.getCreatedAt(), this.getLastModifiedAt());
     }
+
+    public void update(Post post) {
+        this.title = post.getTitle();
+        this.body = post.getBody();
+    }
 }

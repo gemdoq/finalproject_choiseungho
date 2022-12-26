@@ -39,17 +39,18 @@ public class PostController {
 
     @GetMapping("/{postId}")
     public Response<PostReadResponse> readOnePost(@PathVariable Long postId) {
-        log.info("Post read id : " + postId);
+        log.info("Post id : " + postId);
         return Response.success(postService.readOnePost(postId));
     }
 
     @PutMapping("/{postId}")
-    public Response<PostUpdateResponse> updatePost(@RequestBody PostUpdateRequest postUpdateRequest, Authentication authentication) {
+    public Response<PostUpdateResponse> updatePost(@PathVariable Long postId, @RequestBody PostUpdateRequest postUpdateRequest, Authentication authentication) {
+        log.info("Post id : " + postId);
         log.info("PostUpdateRequest's title : {}, body : {}", postUpdateRequest.getTitle(), postUpdateRequest.getBody());
         log.info("Authentication's ", authentication);
 
-        PostDto savedPostDto = postService.updatePost(postUpdateRequest, authentication);
-        return Response.success(new PostUpdateResponse("포스트 수정 완료", savedPostDto.getId()));
+        PostDto updatedPostDto = postService.updatePost(postId, postUpdateRequest, authentication);
+        return Response.success(new PostUpdateResponse("포스트 수정 완료", updatedPostDto.getId()));
     }
 
     @DeleteMapping("/{postId}")
