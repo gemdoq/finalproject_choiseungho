@@ -51,4 +51,12 @@ public class PostController {
         PostDto savedPostDto = postService.updatePost(postUpdateRequest, authentication);
         return Response.success(new PostUpdateResponse("포스트 수정 완료", savedPostDto.getId()));
     }
+
+    @DeleteMapping("/{postId}")
+    public Response<PostDeleteResponse> deletePostById(@PathVariable Long postId, Authentication authentication) {
+        log.info("Authentication's ", authentication);
+
+        Long deletedPostId = postService.deletePostById(postId, authentication);
+        return Response.success(new PostDeleteResponse("포스트 삭제 완료", deletedPostId));
+    }
 }

@@ -57,4 +57,22 @@ public class PostService {
         Post savedPost = postRepository.save(postUpdateRequest.toPost(user));
         return savedPost.toPostDto();
     }
+
+    public Long deletePostById(Long postId, Authentication authentication) {
+        User user = userRepository.findByUserName(authentication.getName())
+                .orElseThrow(() -> new UserException(ErrorCode.USERNAME_NOT_FOUND, ErrorCode.USERNAME_NOT_FOUND.getMessage()));
+        log.info("authentication", authentication.toString());
+        log.info("authenticated name", authentication.getName());
+
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new PostException(ErrorCode.POST_NOT_FOUND, ErrorCode.POST_NOT_FOUND.getMessage()));
+        log.info("Got postId from PathVariable" + postId);
+        log.info("Post author UserName : {}", post.getUser().getUserName());
+
+        if( !post.getUser().equals(user)) throw new PostException(ErrorCode.INVALID_PERMISSION, ErrorCode.INVALID_PERMISSION.getMessage());
+
+        postRepository.deleteById(postId);
+
+        return postId;
+    }
 }
