@@ -21,16 +21,23 @@
 > ![pipeline](./img/pipeline.png)
 - - -
 　
+## ▶ Deployment
+```shell
+sudo sh deploy.sh {db.url} {db.username} {db.password} {jwt.secret} {port} {gitlab.username} {project.name}
+```
+　
+- - -
+　
 ## ▶ Access address
 ```shell
 {address}:{port}
 ```
 　
 - - -
-　
-## ▶ Deployment
-```shell
-sudo sh deploy.sh {db.url} {db.username} {db.password} {jwt.secret} {port} {gitlab.username} {project.name}
+
+## ▶ Swagger-ui address
+```
+http://ec2-43-200-177-246.ap-northeast-2.compute.amazonaws.com:8080/swagger-ui/
 ```
 　
 - - -
@@ -113,8 +120,8 @@ sudo sh deploy.sh {db.url} {db.username} {db.password} {jwt.secret} {port} {gitl
   "title" : "title1",
   "body" : "body",
   "userName" : "user1",
-  "createdAt" : yyyy-mm-dd hh:mm:ss,
-  "lastModifiedAt" : yyyy-mm-dd hh:mm:ss
+  "createdAt" : yyyy/MM/dd HH:mm:ss,
+  "lastModifiedAt" : yyyy/MM/dd HH:mm:ss
 }
 ```
 #### ◇ 등록 기능
