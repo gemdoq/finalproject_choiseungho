@@ -17,9 +17,6 @@
 ## ▶ ERD
 > ![erd](./img/erd.png)
 - - -
-## ▶ Pipelines
-> ![pipeline](./img/pipeline.png)
-- - -
 　
 ## ▶ Deployment
 ```shell
@@ -182,4 +179,21 @@ http://ec2-43-200-177-246.ap-northeast-2.compute.amazonaws.com:8080/swagger-ui/
 ```
 　
 - - -
+
+## ▶ [접근 방법]
+>
+> 
+> 
+> 
+> 
 　
+- - -
+
+## ▶ [특이사항]
+>
+> 
+> 
+>
+> 
+
+- - -
