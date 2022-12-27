@@ -21,6 +21,13 @@ public class PostReadResponse {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy/MM/dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime lastModifiedAt;
 
+    public PostReadResponse(Long id, String title, String body, String userName) {
+        this.id = id;
+        this.title = title;
+        this.body = body;
+        this.userName = userName;
+    }
+
     public static PostReadResponse toPostReadResponse(Post post) {
         return PostReadResponse.builder()
                 .id(post.getId())
