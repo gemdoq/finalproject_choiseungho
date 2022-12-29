@@ -4,7 +4,9 @@
 ## 🔨 TECH STACK
 ![Spring Boot](https://img.shields.io/badge/spring_boot-6DB33F?style=for-the-badge&logo=Springboot&logoColor=white)
 ![Spring Security](https://img.shields.io/badge/spring_security-6DB33F?style=for-the-badge&logo=SpringSecurity&logoColor=white)
+![GitLab](https://img.shields.io/badge/GitLab-FC6D26?style=for-the-badge&logo=GitLab&logoColor=white)
 ![MySQL](https://img.shields.io/badge/MYSQL-4479A1?style=for-the-badge&logo=MySQL&logoColor=white)
+![MariaDB](https://img.shields.io/badge/MariaDB-4479A1?style=for-the-badge&logo=MariaDB&logoColor=white)
 ![Amazon EC2](https://img.shields.io/badge/Amazon_EC2-FF9900?style=for-the-badge&logo=AmazonEC2&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=Docker&logoColor=white)
 - - -
@@ -15,8 +17,8 @@
 > - 빌드 : Gradle 6.8
 > - 서버 : AWS EC2
 > - 배포 : Docker
-> - 데이터베이스 : MySql 8.0
-> - 필수 라이브러리 : SpringBoot Web, MySQL, Spring Data JPA, Lombok, Spring Security
+> - 데이터베이스 : MySQL, MariaDB
+> - 필수 라이브러리 : SpringBoot Web, MySQL, MariaDB, Spring Data JPA, Lombok, Spring Security
 - - -
 ## ▶ Architectures
 > ![architecture](./img/architecture.png)
