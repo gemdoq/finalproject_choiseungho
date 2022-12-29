@@ -1,6 +1,13 @@
 - - -
-# 프로젝트 설명
-
+# 💬 프로젝트 설명
+- - -
+## 🔨 TECH STACK
+![Spring Boot](https://img.shields.io/badge/spring_boot-6DB33F?style=for-the-badge&logo=Springboot&logoColor=white)
+![Spring Security](https://img.shields.io/badge/spring_security-6DB33F?style=for-the-badge&logo=SpringSecurity&logoColor=white)
+![MySQL](https://img.shields.io/badge/MYSQL-4479A1?style=for-the-badge&logo=MySQL&logoColor=white)
+![Amazon EC2](https://img.shields.io/badge/Amazon_EC2-FF9900?style=for-the-badge&logo=AmazonEC2&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=Docker&logoColor=white)
+- - -
 ## ▶ 개발환경
 > - 에디터 : Intellij Ultimate
 > - 개발 툴 : SpringBoot 2.7.5
@@ -32,14 +39,26 @@ sudo sh deploy.sh {db.url} {db.username} {db.password} {jwt.secret} {port} {gitl
 　
 - - -
 
-## ▶ Swagger-ui address
+## ▶ 📃 Swagger-ui address
 ```
 http://ec2-43-200-177-246.ap-northeast-2.compute.amazonaws.com:8080/swagger-ui/
 ```
 　
 - - -
 　
-## ▶ Endpoint
+## ▶ 📔Endpoint
+
+|  구분  |  HTTP  |              URI              |          설명           |
+|:----:|:------:|:-----------------------------:|:------------------------:|
+| USER |  POST  |       api/v1/users/join       |         회원가입          |
+| USER |  POST  |      api/v1/users/login       |      로그인 및 토큰 발급      |
+| USER |  POST  | api/v1/users/{id}/role/change | 유저 권한 변경 (ONLY ADMIN) |
+| POST |  GET   |         api/v1/posts          |      게시글 리스트 조회       |
+| POST |  GET   |       api/v1/posts/{id}       |       게시글 상세 조회       |
+| POST |  POST  |         api/v1/posts          |        게시글 등록         |
+| POST |  PUT   |       api/v1/posts/{id}       |        게시글 수정         |
+| POST | DELETE |       api/v1/posts/{id}       |        게시글 삭제         |
+
 　
 ### ◆ 기본 URL 
 ```
