@@ -3,10 +3,10 @@ package com.example.finalproject_choiseungho.domain.dto;
 import com.example.finalproject_choiseungho.domain.entity.Post;
 import com.example.finalproject_choiseungho.domain.entity.User;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 
 @AllArgsConstructor
-@Getter
+@Data
 public class PostCreateRequest {
     private String title;
     private String body;
