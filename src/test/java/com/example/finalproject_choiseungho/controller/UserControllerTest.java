@@ -64,7 +64,6 @@ class UserControllerTest {
                 .andExpect(jsonPath("$.result.userId").value(1L))
                 .andExpect(jsonPath("$.result.userName").value("mockUserName"));
 
-
         verify(userService).join(any(UserJoinRequest.class));
     }
 
