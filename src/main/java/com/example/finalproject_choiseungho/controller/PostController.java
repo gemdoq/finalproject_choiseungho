@@ -47,7 +47,7 @@ public class PostController {
     public Response<PostUpdateResponse> updatePost(@PathVariable Long postId, @RequestBody PostUpdateRequest postUpdateRequest, Authentication authentication) {
         log.info("Post id : " + postId);
         log.info("PostUpdateRequest's title : {}, body : {}", postUpdateRequest.getTitle(), postUpdateRequest.getBody());
-        log.info("Authentication's ", authentication);
+        log.info("Authentication's " + authentication);
 
         Long updatedPostId = postService.updatePost(postId, postUpdateRequest, authentication);
         return Response.success(new PostUpdateResponse("포스트 수정 완료", updatedPostId));
