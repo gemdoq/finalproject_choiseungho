@@ -3,6 +3,7 @@ package com.example.finalproject_choiseungho.service;
 import com.example.finalproject_choiseungho.domain.dto.CommentCreateRequest;
 import com.example.finalproject_choiseungho.domain.dto.CommentDto;
 import com.example.finalproject_choiseungho.domain.dto.CommentReadResponse;
+import com.example.finalproject_choiseungho.domain.dto.CommentUpdateRequest;
 import com.example.finalproject_choiseungho.domain.entity.Comment;
 import com.example.finalproject_choiseungho.domain.entity.Post;
 import com.example.finalproject_choiseungho.domain.entity.User;
@@ -19,6 +20,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -59,5 +61,42 @@ public class CommentService {
         log.info("Comment {} is found", commentId);
 
         return CommentReadResponse.toCommentReadResponse(comment);
+    }
+
+    @Transactional
+    public CommentDto updateComment(Long postId, Long commentId, CommentUpdateRequest commentUpdateRequest, Authentication authentication) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new PostException(ErrorCode.POST_NOT_FOUND, ErrorCode.POST_NOT_FOUND.getMessage()));
+        log.info("Got postId from PathVariable : " + postId);
+        log.info("Post author UserName : {}", post.getUser().getUserName());
+
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new CommentException(ErrorCode.COMMENT_NOT_FOUND, ErrorCode.COMMENT_NOT_FOUND.getMessage()));
+
+        if(!isValid(comment, authentication)) throw new CommentException(ErrorCode.INVALID_PERMISSION, ErrorCode.INVALID_PERMISSION.getMessage());
+
+        comment.update(commentUpdateRequest.getComment());
+
+        return comment.toCommentDto();
+    }
+
+    public Long deleteCommentById(Long postId, Long commentId, Authentication authentication) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new PostException(ErrorCode.POST_NOT_FOUND, ErrorCode.POST_NOT_FOUND.getMessage()));
+        log.info("Got postId from PathVariable : " + postId);
+        log.info("Post author UserName : {}", post.getUser().getUserName());
+
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new CommentException(ErrorCode.COMMENT_NOT_FOUND, ErrorCode.COMMENT_NOT_FOUND.getMessage()));
+
+        if(!isValid(comment, authentication)) throw new CommentException(ErrorCode.INVALID_PERMISSION, ErrorCode.INVALID_PERMISSION.getMessage());
+
+        commentRepository.delete(comment);
+
+        return commentId;
+    }
+
+    public boolean isValid(Comment comment, Authentication authentication) {
+        return comment.getUser().getUserName().equals(authentication.getName());
     }
 }

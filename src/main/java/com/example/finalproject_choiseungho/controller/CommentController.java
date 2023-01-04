@@ -46,4 +46,23 @@ public class CommentController {
         log.info("Post id : {}, Comment id : {}", postId, commentId);
         return Response.success(commentService.readOneComment(postId, commentId));
     }
+
+    @PutMapping("/{postId}/comments/{commentId}")
+    public Response<CommentUpdateResponse> updateComment(@PathVariable(value = "postId") Long postId, @PathVariable(value = "commentId") Long commentId, @RequestBody CommentUpdateRequest commentUpdateRequest, Authentication authentication) {
+        log.info("Post id : {}, Comment id : {}", postId, commentId);
+        log.info("CommentUpdateRequest's comment : " + commentUpdateRequest.getComment());
+        log.info("Authentication : " + authentication);
+
+        CommentDto updatedCommentDto = commentService.updateComment(postId, commentId, commentUpdateRequest, authentication);
+        return Response.success(updatedCommentDto.toCommentUpdateResponse());
+    }
+
+    @DeleteMapping("/{postId}/comments/{commentId}")
+    public Response<CommentDeleteResponse> deleteCommentById(@PathVariable(value = "postId") Long postId, @PathVariable(value = "commentId") Long commentId, Authentication authentication) {
+        log.info("Post id : {}, Comment id : {}", postId, commentId);
+        log.info("Authentication : " + authentication);
+
+        Long deletedCommentId = commentService.deleteCommentById(postId, commentId, authentication);
+        return Response.success(new CommentDeleteResponse("댓글 삭제 완료", deletedCommentId));
+    }
 }

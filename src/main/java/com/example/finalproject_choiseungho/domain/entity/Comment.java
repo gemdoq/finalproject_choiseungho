@@ -31,4 +31,8 @@ public class Comment extends CommentBase{
     public CommentDto toCommentDto() {
         return new CommentDto(this.id, this.comment, this.post, this.user, this.getCreatedAt(), this.getLastModifiedAt());
     }
+
+    public void update(String comment) {
+        this.comment = comment;
+    }
 }
