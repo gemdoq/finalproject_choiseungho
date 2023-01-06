@@ -44,4 +44,12 @@ public class JowayoService {
             return 1;
         }
     }
+
+    public Integer countJowayo(Long postId) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new PostException(ErrorCode.POST_NOT_FOUND, ErrorCode.POST_NOT_FOUND.getMessage()));
+        log.info("Post {} is found", postId);
+
+        return jowayoRepository.countByPost(post);
+    }
 }

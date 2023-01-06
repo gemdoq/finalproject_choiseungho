@@ -9,4 +9,5 @@ import java.util.Optional;
 
 public interface JowayoRepository extends JpaRepository<Jowayo, Long> {
     Optional<Jowayo> findByPostAndUser(Post post, User user);
+    Integer countByPost(Post post);
 }
