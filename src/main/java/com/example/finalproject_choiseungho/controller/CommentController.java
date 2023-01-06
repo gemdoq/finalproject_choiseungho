@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
 @RequestMapping("/api/v1/posts")
@@ -23,7 +24,7 @@ public class CommentController {
 
     @ApiOperation(value = "댓글 작성 기능", notes = "Parameter의 postId에 포스트 ID를 넣고, Request body의 comment를 작성")
     @PostMapping("/{postId}/comments")
-    public Response<CommentCreateResponse> createComment(@ApiParam("포스트 ID") @PathVariable Long postId, @RequestBody CommentCreateRequest commentCreateRequest, Authentication authentication) {
+    public Response<CommentCreateResponse> createComment(@ApiParam("포스트 ID") @PathVariable Long postId, @RequestBody CommentCreateRequest commentCreateRequest, @ApiIgnore Authentication authentication) {
         log.info("Post Id : " + postId);
         log.info("Comment Create Request's comment : " + commentCreateRequest.getComment());
         log.info("Authentication : " + authentication);
@@ -52,7 +53,7 @@ public class CommentController {
 
     @ApiOperation(value = "댓글 수정 기능", notes = "Parameter의 postId에 포스트 ID, commentId에 댓글 ID 입력 후 Request body의 comment에 수정할 댓글 내용 작성")
     @PutMapping("/{postId}/comments/{commentId}")
-    public Response<CommentUpdateResponse> updateComment(@ApiParam("포스트 ID") @PathVariable(value = "postId") Long postId, @ApiParam("댓글 ID") @PathVariable(value = "commentId") Long commentId, @RequestBody CommentUpdateRequest commentUpdateRequest, Authentication authentication) {
+    public Response<CommentUpdateResponse> updateComment(@ApiParam("포스트 ID") @PathVariable(value = "postId") Long postId, @ApiParam("댓글 ID") @PathVariable(value = "commentId") Long commentId, @RequestBody CommentUpdateRequest commentUpdateRequest, @ApiIgnore Authentication authentication) {
         log.info("Post id : {}, Comment id : {}", postId, commentId);
         log.info("CommentUpdateRequest's comment : " + commentUpdateRequest.getComment());
         log.info("Authentication : " + authentication);
@@ -63,7 +64,7 @@ public class CommentController {
 
     @ApiOperation(value = "댓글 삭제 기능", notes = "Parameter의 postId에 포스트 ID, commentId에 댓글 ID 입력")
     @DeleteMapping("/{postId}/comments/{commentId}")
-    public Response<CommentDeleteResponse> deleteCommentById(@ApiParam("포스트 ID") @PathVariable(value = "postId") Long postId, @ApiParam("댓글 ID") @PathVariable(value = "commentId") Long commentId, Authentication authentication) {
+    public Response<CommentDeleteResponse> deleteCommentById(@ApiParam("포스트 ID") @PathVariable(value = "postId") Long postId, @ApiParam("댓글 ID") @PathVariable(value = "commentId") Long commentId, @ApiIgnore Authentication authentication) {
         log.info("Post id : {}, Comment id : {}", postId, commentId);
         log.info("Authentication : " + authentication);
 

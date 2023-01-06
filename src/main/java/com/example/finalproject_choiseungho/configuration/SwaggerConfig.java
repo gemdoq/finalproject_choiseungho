@@ -19,9 +19,9 @@ public class SwaggerConfig {
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.OAS_30)
-                .apiInfo(apiInfo())
                 .securityContexts(Arrays.asList(securityContext()))
                 .securitySchemes(Arrays.asList(apiKey()))
+                .apiInfo(apiInfo())
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.example.finalproject_choiseungho"))
                 .paths(PathSelectors.any())
@@ -30,8 +30,8 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("MutsaSNS with Swagger")
-                .description("스프링부트를 활용한 MutsaSNS 구현")
+                .title("스프링부트와 JPA를 활용한 MutsaSNS API with Swagger")
+                .description("회원가입, 로그인, 인증 및 인가, 게시글 및 댓글의 CRUD, 마이피드, 좋아요, 알람")
                 .contact(new Contact("최승호", "", "gemdoq@gmail.com"))
                 .version("1.0.0")
                 .build();

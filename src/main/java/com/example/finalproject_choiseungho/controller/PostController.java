@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
 @RequestMapping("/api/v1/posts")
@@ -23,7 +24,7 @@ public class PostController {
 
     @ApiOperation(value = "포스트 작성 기능", notes = "Request body의 Title에 제목과 Body에 본문을 작성")
     @PostMapping
-    public Response<PostCreateResponse> createPost(@RequestBody PostCreateRequest postCreateRequest, Authentication authentication) {
+    public Response<PostCreateResponse> createPost(@RequestBody PostCreateRequest postCreateRequest, @ApiIgnore Authentication authentication) {
         log.info("PostCreateRequest's title : {}, body : {}", postCreateRequest.getTitle(), postCreateRequest.getBody());
         log.info("Authentication's ", authentication);
 
@@ -50,7 +51,7 @@ public class PostController {
 
     @ApiOperation(value = "포스트 수정 기능", notes = "Parameter의 postId에 포스트 ID 입력 후 Request body의 Title에 제목과 Body에 본문을 작성")
     @PutMapping("/{postId}")
-    public Response<PostUpdateResponse> updatePost(@ApiParam("포스트 ID") @PathVariable Long postId, @RequestBody PostUpdateRequest postUpdateRequest, Authentication authentication) {
+    public Response<PostUpdateResponse> updatePost(@ApiParam("포스트 ID") @PathVariable Long postId, @RequestBody PostUpdateRequest postUpdateRequest, @ApiIgnore Authentication authentication) {
         log.info("Post id : " + postId);
         log.info("PostUpdateRequest's title : {}, body : {}", postUpdateRequest.getTitle(), postUpdateRequest.getBody());
         log.info("Authentication's " + authentication);
@@ -61,7 +62,7 @@ public class PostController {
 
     @ApiOperation(value = "포스트 삭제 기능", notes = "Parameter의 postId에 포스트 ID 입력")
     @DeleteMapping("/{postId}")
-    public Response<PostDeleteResponse> deletePostById(@ApiParam("포스트 ID") @PathVariable Long postId, Authentication authentication) {
+    public Response<PostDeleteResponse> deletePostById(@ApiParam("포스트 ID") @PathVariable Long postId, @ApiIgnore Authentication authentication) {
         log.info("Authentication's ", authentication);
 
         Long deletedPostId = postService.deletePostById(postId, authentication);
