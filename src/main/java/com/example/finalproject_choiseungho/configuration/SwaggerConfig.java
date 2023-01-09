@@ -22,8 +22,11 @@ public class SwaggerConfig {
     public Docket api() {
         return new Docket(DocumentationType.OAS_30)
                 .ignoredParameterTypes(Authentication.class, Pageable.class)
+                .securitySchemes(Arrays.asList(HttpAuthenticationScheme.JWT_BEARER_BUILDER
+                        .name("JWT")
+                        .description("토큰 타입(Bearer)을 제외한 토큰 값(JWT)만 입력해주세요.")
+                        .build()))
                 .securityContexts(Arrays.asList(securityContext()))
-                .securitySchemes(Arrays.asList(apiKey()))
                 .apiInfo(apiInfo())
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.example.finalproject_choiseungho"))
@@ -47,13 +50,6 @@ public class SwaggerConfig {
     }
 
     private List<SecurityReference> defaultAuth() {
-        AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
-        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
-        authorizationScopes[0] = authorizationScope;
-        return Arrays.asList(new SecurityReference("Authorization", authorizationScopes));
-    }
-
-    private ApiKey apiKey() {
-        return new ApiKey("Authorization", "Authorization", "header");
+        return Arrays.asList(SecurityReference.builder().scopes(new AuthorizationScope[0]).reference("JWT").build());
     }
 }
