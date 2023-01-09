@@ -2,6 +2,7 @@ package com.example.finalproject_choiseungho.controller;
 
 import com.example.finalproject_choiseungho.domain.dto.*;
 import com.example.finalproject_choiseungho.service.CommentService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
+@Api(tags = "댓글(COMMENT)")
 @RestController
 @RequestMapping("/api/v1/posts")
 @RequiredArgsConstructor

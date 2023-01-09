@@ -2,6 +2,7 @@ package com.example.finalproject_choiseungho.controller;
 
 import com.example.finalproject_choiseungho.domain.dto.Response;
 import com.example.finalproject_choiseungho.service.JowayoService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
+@Api(tags = "좋아요(LIKE)")
 @RestController
 @RequestMapping("/api/v1/posts")
 @RequiredArgsConstructor

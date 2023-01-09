@@ -1,6 +1,7 @@
 package com.example.finalproject_choiseungho.controller;
 
 import com.example.finalproject_choiseungho.service.AlgorithmService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+@Api(tags = "기능테스트(CI/CD)")
 @RestController
 @RequiredArgsConstructor
 @Slf4j

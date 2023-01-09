@@ -2,13 +2,16 @@ package com.example.finalproject_choiseungho.controller;
 
 import com.example.finalproject_choiseungho.domain.dto.*;
 import com.example.finalproject_choiseungho.service.UserService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Api(tags = "회원(USER)")
 @RestController
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor

@@ -4,6 +4,7 @@ import com.example.finalproject_choiseungho.domain.dto.AlarmList;
 import com.example.finalproject_choiseungho.domain.dto.AlarmReadResponse;
 import com.example.finalproject_choiseungho.domain.dto.Response;
 import com.example.finalproject_choiseungho.service.AlarmService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +19,7 @@ import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
 
+@Api(tags = "알림(ALARM)")
 @RestController
 @RequestMapping("/api/v1/alarms")
 @RequiredArgsConstructor
