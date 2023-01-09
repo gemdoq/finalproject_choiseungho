@@ -86,4 +86,13 @@ public class PostService {
 
         return postId;
     }
+
+    public Page<PostReadResponse> readMyPostList(Pageable pageable, Authentication authentication) {
+        User user = userRepository.findByUserName(authentication.getName())
+                .orElseThrow(() -> new UserException(ErrorCode.USERNAME_NOT_FOUND, ErrorCode.USERNAME_NOT_FOUND.getMessage()));
+        log.info("authentication", authentication.toString());
+        log.info("authenticated name", authentication.getName());
+
+        return postRepository.findAllByUser(user, pageable).map(PostReadResponse::toPostReadResponse);
+    }
 }

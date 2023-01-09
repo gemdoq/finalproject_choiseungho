@@ -68,4 +68,14 @@ public class PostController {
         Long deletedPostId = postService.deletePostById(postId, authentication);
         return Response.success(new PostDeleteResponse("포스트 삭제 완료", deletedPostId));
     }
+
+    @ApiOperation(value = "포스트 마이피드 조회 기능")
+    @GetMapping("/my")
+    public Response<Page<PostReadResponse>> readMyPostList(@PageableDefault(size = 20, sort = "createdAt", direction = Sort.Direction.DESC)Pageable pageable, @ApiIgnore Authentication authentication) {
+        Page<PostReadResponse> postList = postService.readMyPostList(pageable, authentication);
+        log.info("pageable : {}", pageable.toString());
+        log.info("Page<PostReadResponse> : {}", postList.toString());
+
+        return Response.success(postList);
+    }
 }
