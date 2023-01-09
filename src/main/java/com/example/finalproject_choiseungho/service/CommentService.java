@@ -1,9 +1,7 @@
 package com.example.finalproject_choiseungho.service;
 
-import com.example.finalproject_choiseungho.domain.dto.CommentCreateRequest;
-import com.example.finalproject_choiseungho.domain.dto.CommentDto;
-import com.example.finalproject_choiseungho.domain.dto.CommentReadResponse;
-import com.example.finalproject_choiseungho.domain.dto.CommentUpdateRequest;
+import com.example.finalproject_choiseungho.domain.dto.*;
+import com.example.finalproject_choiseungho.domain.entity.Alarm;
 import com.example.finalproject_choiseungho.domain.entity.Comment;
 import com.example.finalproject_choiseungho.domain.entity.Post;
 import com.example.finalproject_choiseungho.domain.entity.User;
@@ -11,6 +9,7 @@ import com.example.finalproject_choiseungho.exception.CommentException;
 import com.example.finalproject_choiseungho.exception.ErrorCode;
 import com.example.finalproject_choiseungho.exception.PostException;
 import com.example.finalproject_choiseungho.exception.UserException;
+import com.example.finalproject_choiseungho.repository.AlarmRepository;
 import com.example.finalproject_choiseungho.repository.CommentRepository;
 import com.example.finalproject_choiseungho.repository.PostRepository;
 import com.example.finalproject_choiseungho.repository.UserRepository;
@@ -30,6 +29,7 @@ public class CommentService {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
     private final CommentRepository commentRepository;
+    private final AlarmRepository alarmRepository;
 
     public CommentDto createComment(Long postId, CommentCreateRequest commentCreateRequest, Authentication authentication) {
         User user = userRepository.findByUserName(authentication.getName())
@@ -41,6 +41,7 @@ public class CommentService {
         log.info("Post {} is found", postId);
 
         Comment savedComment = commentRepository.save(commentCreateRequest.toComment(user, post));
+        alarmRepository.save(Alarm.toAlarm(AlarmType.NEW_COMMENT_ON_POST, post, user));
         return savedComment.toCommentDto();
     }
 

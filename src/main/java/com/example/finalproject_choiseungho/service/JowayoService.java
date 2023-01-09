@@ -1,12 +1,14 @@
 package com.example.finalproject_choiseungho.service;
 
-import com.example.finalproject_choiseungho.domain.dto.JowayoDto;
+import com.example.finalproject_choiseungho.domain.dto.AlarmType;
 import com.example.finalproject_choiseungho.domain.entity.Jowayo;
+import com.example.finalproject_choiseungho.domain.entity.Alarm;
 import com.example.finalproject_choiseungho.domain.entity.Post;
 import com.example.finalproject_choiseungho.domain.entity.User;
 import com.example.finalproject_choiseungho.exception.ErrorCode;
 import com.example.finalproject_choiseungho.exception.PostException;
 import com.example.finalproject_choiseungho.exception.UserException;
+import com.example.finalproject_choiseungho.repository.AlarmRepository;
 import com.example.finalproject_choiseungho.repository.JowayoRepository;
 import com.example.finalproject_choiseungho.repository.PostRepository;
 import com.example.finalproject_choiseungho.repository.UserRepository;
@@ -25,6 +27,7 @@ public class JowayoService {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
     private final JowayoRepository jowayoRepository;
+    private final AlarmRepository alarmRepository;
 
     public Integer createJowayo(Long postId, Authentication authentication) {
         User user = userRepository.findByUserName(authentication.getName())
@@ -41,6 +44,7 @@ public class JowayoService {
             return 0;
         } else {
             jowayoRepository.save(Jowayo.toJowayo(post, user));
+            alarmRepository.save(Alarm.toAlarm(AlarmType.NEW_LIKE_ON_POST, post, user));
             return 1;
         }
     }

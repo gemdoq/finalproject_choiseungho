@@ -34,4 +34,13 @@ public class Alarm extends AlarmBase {
     private String text;
 
     private LocalDateTime deletedAt;
+
+    public static Alarm toAlarm(AlarmType alarmType, Post post, User user) {
+        return Alarm.builder()
+                .alarmType(alarmType)
+                .user(user)
+                .post(post)
+                .text(alarmType.getAlarmText())
+                .build();
+    }
 }
