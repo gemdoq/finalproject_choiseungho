@@ -17,6 +17,12 @@ import java.util.List;
 
 @Configuration
 public class SwaggerConfig {
+    private String TITLE = "스프링부트와 JPA를 활용한 MutsaSNS API with Swagger";
+    private String DESC = "<h3>회원가입, 로그인, 인증 및 인가, 게시글 및 댓글의 CRUD, 마이피드, 좋아요, 알람</h3><img src=\"https://user-images.githubusercontent.com/85062826/211473810-0030336e-b459-467f-9318-314e7c613965.png\" width=300 height=300 />";
+    private String NAME = "최승호";
+    private String URL = "https://gemdoq.github.io";
+    private String EMAIL = "gemdoq@gmail.com";
+    private String VERSION = "1.0.0";
 
     @Bean
     public Docket api() {
@@ -36,10 +42,10 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("스프링부트와 JPA를 활용한 MutsaSNS API with Swagger")
-                .description("회원가입, 로그인, 인증 및 인가, 게시글 및 댓글의 CRUD, 마이피드, 좋아요, 알람")
-                .contact(new Contact("최승호", "", "gemdoq@gmail.com"))
-                .version("1.0.0")
+                .title(TITLE)
+                .description(DESC)
+                .contact(new Contact(NAME, URL, EMAIL))
+                .version(VERSION)
                 .build();
     }
 
