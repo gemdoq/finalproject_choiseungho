@@ -35,3 +35,6 @@ out/
 
 ### VS Code ###
 .vscode/
+/envvar/
+/src/main/resources/application-env.yml
+/envvar/

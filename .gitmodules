@@ -1,0 +1,3 @@
+[submodule "envvar"]
+	path = envvar
+	url = https://github.com/gemdoq/gitsubmoduletest.git

@@ -35,6 +35,25 @@ dependencies {
     implementation 'io.jsonwebtoken:jjwt:0.9.1'
 }
 
+tasks {
+    processResources {
+        duplicatesStrategy = org.gradle.api.file.DuplicatesStrategy.INCLUDE
+    }
+}
+
+task copy() {
+    copy {
+        from './envvar'
+        include "application-env.yml"
+        into 'src/main/resources'
+    }
+}
+
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+bootRun {
+    String activeProfile = System.properties['spring.profile.active']
+    systemProperty "spring.profile.active", activeProfile
 }
