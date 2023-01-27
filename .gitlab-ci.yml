@@ -7,6 +7,8 @@ package:
   services:
     - docker:dind
   before_script:
+    - git submodule sync --recursive
+    - git submodule update --init --recursive
     - docker login registry.gitlab.com -u $GITLAB_USER -p $GITLAB_PASSWORD
   script:
     - docker build --build-arg ENVIRONMENT=$YAML_PROFILE -t registry.gitlab.com/$GITLAB_USER/$PROJECT_NAME .
