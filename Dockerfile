@@ -24,5 +24,6 @@ ENTRYPOINT [                                                \
     "-jar",                                                 \
     "-Djava.security.egd=file:/dev/./urandom",              \
     "-Dsun.net.inetaddr.ttl=0",                             \
+    "-Dspring.profiles.active=env",        \
     "app.jar"              \
 ]
