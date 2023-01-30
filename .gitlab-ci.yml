@@ -7,16 +7,9 @@ package:
   services:
     - docker:dind
   before_script:
-    - apk update && apk add git
-    - git config --global user.name "$GITLAB_USER"
-    - git config --global user.name
-    - git config --global user.email "$GITLAB_USER@gmail.com"
-    - git config --global user.email
-    - git submodule sync --recursive
-    - git submodule update --init --recursive
     - docker login registry.gitlab.com -u $GITLAB_USER -p $GITLAB_PASSWORD
   script:
-    - docker build --build-arg ENVIRONMENT=$YAML_PROFILE -t registry.gitlab.com/$GITLAB_USER/$PROJECT_NAME .
+    - docker build -t registry.gitlab.com/$GITLAB_USER/$PROJECT_NAME .
     - docker push registry.gitlab.com/$GITLAB_USER/$PROJECT_NAME
   after_script:
     - docker logout
